@@ -7,8 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "lint:staged": "eslint $(git diff --cached --name-only --diff-filter=d | grep -E '\\.(js|jsx|ts|tsx)$') --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
+    "format:staged": "prettier --write $(git diff --cached --name-only --diff-filter=d | grep -E '\\.(js|jsx|ts|tsx|json|css|scss|md)$')",
     "preview": "vite preview",
     "prepare": "husky install"
   },
