@@ -71,5 +71,7 @@ export default {
         "2xl": "6rem",
       },
     },
+    // eslint-disable-next-line no-undef
+    plugins: [require("@tailwindcss/line-clamp")],
   },
 };

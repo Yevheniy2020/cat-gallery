@@ -1,11 +1,26 @@
-import { Button } from "./components/ui/button";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MainPage from "./view/main/main-page";
+import axios from "axios";
+import Layout from "./components/layout/layout";
+
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+axios.defaults.headers.common["x-api-key"] = import.meta.env.VITE_API_KEY;
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <Button variant="secondary">Hello</Button>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Layout>
+        <MainPage />
+      </Layout>
+    </QueryClientProvider>
   );
 }
 
