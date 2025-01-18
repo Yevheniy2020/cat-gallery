@@ -8,6 +8,8 @@ const Header: FC<HeaderProps> = ({ isBorderBlock }) => {
   return (
     <header className="h-60 sm:h-80 relative">
       <img
+        width={1920}
+        height={1080}
         className="h-full max-h-60 sm:max-h-80 w-full object-cover "
         src="/bg-main.webp"
         alt="Image Background"
