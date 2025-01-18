@@ -9,7 +9,7 @@ const Header: FC<HeaderProps> = ({ isBorderBlock }) => {
     <header className="h-60 sm:h-80 relative">
       <img
         className="h-full max-h-60 sm:max-h-80 w-full object-cover "
-        src="/bg-main.jpg"
+        src="/bg-main.webp"
         alt="Image Background"
       />
       <div className="absolute left-1/2 -translate-x-1/2 top-1/4 w-full">

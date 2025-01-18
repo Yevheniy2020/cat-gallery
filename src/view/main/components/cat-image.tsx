@@ -28,6 +28,8 @@ const CatImage: FC<CatImageProps> = memo(
         onClick={onToggleFavorite}
       >
         <img
+          width={image.width}
+          height={image.height}
           className="w-full h-full object-cover bg-zinc-700 rounded-lg"
           src={image.url}
           alt={breedName || "Cat"}

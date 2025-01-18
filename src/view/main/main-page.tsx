@@ -28,7 +28,7 @@ const MainPage: FC = () => {
     useGetAll: useGetAllImages,
     params: {
       has_breeds: true,
-      size: "full",
+      size: "small",
       limit: 10,
     },
   });
