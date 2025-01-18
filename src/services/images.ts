@@ -1,5 +1,5 @@
 import { serviceBuilder } from "@/utils/service.builder";
 
 export const { useGetAllEntries: useGetAllImages } = serviceBuilder<ImageDto>(
-  "images/search?include_breeds=1&size=full&limit=10",
+  "images/search?has_breeds=true&size=full&limit=10",
 );
