@@ -22,7 +22,6 @@ const MainPage: FC = () => {
     showFavorites: false,
     searchTerm: "",
   });
-
   const { favorites, isFavorite, toggleFavorite } = useFavorites();
   const { data, isLoading, isError } = useEntityActions<ImageDto>({
     useGetAll: useGetAllImages,

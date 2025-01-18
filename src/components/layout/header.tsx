@@ -10,10 +10,16 @@ const Header: FC<HeaderProps> = ({ isBorderBlock }) => {
       <img
         width={1920}
         height={1080}
+        src="/bg-main-large.webp"
+        srcSet="
+          /bg-main-small.webp 480w,
+          /bg-main-medium.webp 1024w,
+          /bg-main-large.webp 1920w
+        "
         className="h-full max-h-60 sm:max-h-80 w-full object-cover "
-        src="/bg-main.webp"
-        alt="Image Background"
+        alt="A background image"
       />
+
       <div className="absolute left-1/2 -translate-x-1/2 top-1/4 w-full">
         <h1 className="text-4xl sm:font-bold text-white text-center">
           The Cat Gallery 😺
