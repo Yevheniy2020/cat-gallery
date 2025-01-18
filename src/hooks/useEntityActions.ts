@@ -13,7 +13,7 @@ export const useEntityActions = <T>({
   return {
     data,
     isLoading: isFetching,
-    isError: error,
+    isError: !!error,
   } as {
     data: T[] | undefined;
     isLoading: boolean;

@@ -1,5 +1,6 @@
 import { FavoritesStorage } from "@/utils/localStorage";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import useEventListener from "@/hooks/useEventListener";
 
 export interface UseFavoritesReturn {
   favorites: string[];
@@ -10,33 +11,34 @@ export interface UseFavoritesReturn {
 }
 
 export function useFavorites(): UseFavoritesReturn {
-  const [favorites, setFavorites] = useState<string[]>(() =>
-    FavoritesStorage.getFavorites(),
+  const [favorites, setFavorites] = useState<string[]>(
+    () => FavoritesStorage.getFavorites() || [],
   );
 
   const isMounted = useRef(false);
 
   useEffect(() => {
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === "favorites") {
-        const newFavorites = event.newValue ? JSON.parse(event.newValue) : [];
-        setFavorites(newFavorites);
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
     isMounted.current = true;
-
     return () => {
-      window.removeEventListener("storage", handleStorageChange);
       isMounted.current = false;
     };
   }, []);
 
+  const handleStorageChange = useCallback((event: StorageEvent) => {
+    if (event.key === "favorites") {
+      const newFavorites = event.newValue ? JSON.parse(event.newValue) : [];
+      setFavorites(newFavorites);
+    }
+  }, []);
+
+  useEventListener<Window, StorageEvent>(
+    "storage",
+    handleStorageChange,
+    typeof window !== "undefined" ? window : null,
+  );
+
   const isFavorite = useCallback(
-    (imageId: string): boolean => {
-      return favorites.includes(imageId);
-    },
+    (imageId: string): boolean => favorites.includes(imageId),
     [favorites],
   );
 
