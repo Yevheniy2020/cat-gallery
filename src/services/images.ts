@@ -1,5 +1,7 @@
 import { serviceBuilder } from "@/utils/service.builder";
 
-export const { useGetAllEntries: useGetAllImages } = serviceBuilder<ImageDto>(
-  "images/search?has_breeds=true&size=full&limit=10",
-);
+export const imageService = serviceBuilder<ImageDto>({
+  baseUrl: "/images/search",
+});
+
+export const { useGetAllEntriesByParams: useGetAllImages } = imageService;

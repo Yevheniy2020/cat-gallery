@@ -1,28 +1,34 @@
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
 export function requestsBuilder<T>(url: string) {
-  const getAllEntries = async (): Promise<T[]> => {
-    const { data } = await axios.get<T[]>(url);
+  const getAllEntries = async (params?: Record<string, any>): Promise<T[]> => {
+    const { data } = await axios.get<T[]>(url, { params });
     return data;
   };
 
-  return {
-    getAllEntries,
-  };
+  return { getAllEntries };
 }
 
-export function serviceBuilder<T>(url: string) {
-  const queryRequests = requestsBuilder<T>(url);
+interface ServiceBuilderOptions {
+  baseUrl: string;
+}
 
-  const useGetAllEntries = () => {
-    return useQuery<T[]>({
-      queryKey: [url],
-      queryFn: queryRequests.getAllEntries,
+type QueryKeyType = readonly [string, Record<string, any>?];
+
+export function serviceBuilder<T>({ baseUrl }: ServiceBuilderOptions) {
+  const { getAllEntries } = requestsBuilder<T>(baseUrl);
+
+  const useGetAllEntriesByParams = (
+    params?: Record<string, any>,
+    queryOptions?: UseQueryOptions<T[], Error, T[], QueryKeyType>,
+  ) => {
+    return useQuery<T[], Error, T[], QueryKeyType>({
+      queryKey: [baseUrl, params] as const,
+      queryFn: () => getAllEntries(params),
+      ...queryOptions,
     });
   };
 
-  return {
-    useGetAllEntries,
-  };
+  return { useGetAllEntriesByParams };
 }

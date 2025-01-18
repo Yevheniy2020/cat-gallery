@@ -17,15 +17,6 @@ const errorContent = (
   />
 );
 
-const loadingContent = useMemo(
-  () => (
-    <SkeletonMasonry quantity={10} breakpoints={breakpoints}>
-      <div className="w-full h-full bg-zinc-700 rounded-lg p-32" />
-    </SkeletonMasonry>
-  ),
-  [],
-);
-
 const MainPage: FC = () => {
   const [filters, setFilters] = useState({
     showFavorites: false,
@@ -35,6 +26,11 @@ const MainPage: FC = () => {
   const { favorites, isFavorite, toggleFavorite } = useFavorites();
   const { data, isLoading, isError } = useEntityActions<ImageDto>({
     useGetAll: useGetAllImages,
+    params: {
+      has_breeds: true,
+      size: "full",
+      limit: 10,
+    },
   });
 
   const handleFavoritesToggle = useCallback((show: boolean) => {
@@ -60,6 +56,15 @@ const MainPage: FC = () => {
       return matchesSearch && matchesFavorites;
     });
   }, [data, filters.showFavorites, filters.searchTerm, favorites]);
+
+  const loadingContent = useMemo(
+    () => (
+      <SkeletonMasonry quantity={10} breakpoints={breakpoints}>
+        <div className="w-full h-full bg-zinc-700 rounded-lg p-32" />
+      </SkeletonMasonry>
+    ),
+    [],
+  );
 
   return (
     <div className="bg-zinc-900">
